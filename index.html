@@ -1,0 +1,576 @@
+<title>Pomysły dla Brodnicy</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Układ: jedna kolumna jak notes przy stole, podium trzech pomysłów, pasek roku od stycznia do grudnia */
+:root{
+  --bg:#F2F6F6; --card:#FFFFFF; --fg:#13272B; --muted:#55696D; --line:#D3DEDF;
+  --lake:#1D6B74; --lake-soft:#DCEDEE; --glaze:#B83A62; --glaze-soft:#F7E1E8; --sun:#C98A12;
+  --h0:#E9EFEF; --h1:#BFDCDD; --h2:#6FB0B5; --h3:#1D6B74;
+  --display:"Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+  --body:"Figtree", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E191B; --card:#152427; --fg:#E2ECED; --muted:#9AB0B3; --line:#284044;
+  --lake:#62B9C1; --lake-soft:#173A3E; --glaze:#EC7FA0; --glaze-soft:#3A1E28; --sun:#E7B04A;
+  --h0:#1A2B2E; --h1:#1F4A4E; --h2:#2F7F86; --h3:#62B9C1; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E191B; --card:#152427; --fg:#E2ECED; --muted:#9AB0B3; --line:#284044;
+  --lake:#62B9C1; --lake-soft:#173A3E; --glaze:#EC7FA0; --glaze-soft:#3A1E28; --sun:#E7B04A;
+  --h0:#1A2B2E; --h1:#1F4A4E; --h2:#2F7F86; --h3:#62B9C1; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{max-width:920px;margin:0 auto;padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.2rem,6vw,3.6rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(1.5rem,3.4vw,2rem);font-weight:700}
+h3{font-size:1.2rem;font-weight:700}
+p{margin:0;max-width:66ch}
+.eyebrow{font-size:.78rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--lake)}
+section{display:flex;flex-direction:column;gap:18px}
+.lead{font-size:1.15rem;color:var(--muted)}
+header{display:flex;flex-direction:column;gap:16px}
+.glaze{color:var(--glaze)}
+.brief{background:var(--lake-soft);border-radius:14px;padding:20px 22px;display:flex;flex-direction:column;gap:8px}
+.brief p{max-width:none}
+
+/* pytanie filtrujące */
+.filter{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.filter div{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--card);display:flex;flex-direction:column;gap:4px;min-width:0}
+.filter b{font-family:var(--display);font-size:1.02rem}
+.filter span{color:var(--muted);font-size:.95rem}
+
+/* podium */
+.podium{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:820px){.podium{grid-template-columns:1fr}}
+.pick{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.pick .rank{font-family:var(--display);font-weight:800;font-size:2.6rem;line-height:1;color:var(--lake)}
+.pick.top{border:2px solid var(--lake)}
+.facts{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;margin:0;font-size:.93rem}
+.facts dt{color:var(--muted)}
+.facts dd{margin:0;font-weight:600;font-variant-numeric:tabular-nums}
+.step{border-top:1px dashed var(--line);padding-top:12px;font-size:.93rem}
+.step b{color:var(--glaze)}
+
+/* ich pomysł */
+.theirs{background:var(--glaze-soft);border-radius:18px;padding:26px;display:flex;flex-direction:column;gap:18px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:700px){.two{grid-template-columns:1fr}}
+.two>div{display:flex;flex-direction:column;gap:10px;min-width:0}
+.two ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
+.path{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:700px){.path{grid-template-columns:1fr}}
+.path div{background:var(--card);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.path small{color:var(--muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.72rem}
+
+/* pasek roku */
+.yearbox{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--card);padding:16px}
+.year{display:grid;grid-template-columns:150px repeat(12,minmax(34px,1fr));gap:4px;min-width:620px;font-size:.85rem;align-items:center}
+.year .m{text-align:center;color:var(--muted);font-weight:600}
+.year .lab{font-weight:600;padding-right:8px}
+.c{height:26px;border-radius:5px}
+.c0{background:var(--h0)}.c1{background:var(--h1)}.c2{background:var(--h2)}.c3{background:var(--h3)}
+.c.mark{outline:2px solid var(--glaze);outline-offset:1px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.85rem;color:var(--muted);align-items:center}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:6px}
+
+/* tabela */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.93rem}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.75rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:700}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:600}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.78rem;font-weight:700;white-space:nowrap}
+.ok{background:var(--lake-soft);color:var(--lake)}
+.mid{background:color-mix(in srgb,var(--sun) 18%,transparent);color:var(--sun)}
+.hi{background:var(--glaze-soft);color:var(--glaze)}
+
+@media (max-width:560px){
+.yearbox{padding:12px 10px;overflow-x:visible}
+.year{grid-template-columns:78px repeat(12,minmax(0,1fr));gap:3px;min-width:0;font-size:.72rem}
+.year .lab{padding-right:4px;line-height:1.2}
+.c{height:22px;border-radius:4px}
+.tbl{overflow-x:visible;border:0;background:none}
+table{min-width:0}
+thead{display:none}
+table,tbody,tr,td{display:block;width:100%}
+tr{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+tr:last-child{margin-bottom:0}
+td{border:0;padding:3px 0;display:flex;justify-content:space-between;gap:12px}
+td:first-child{font-weight:700;padding-bottom:6px;display:block}
+td:not(:first-child)::before{color:var(--muted);font-size:.85rem;font-weight:500}
+td:nth-child(2)::before{content:"Wkład (szacunek)"}
+td:nth-child(3)::before{content:"Cały rok?"}
+td:nth-child(4)::before{content:"Godziny"}
+td:nth-child(5)::before{content:"Ryzyko"}
+td.num{white-space:normal}
+}
+
+/* szalone */
+.crazy{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.crazy div{border:1.5px dashed var(--glaze);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.crazy b{font-family:var(--display);font-size:1.05rem}
+.crazy span{font-size:.93rem;color:var(--muted)}
+
+/* pieniądze */
+.money{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+@media (max-width:700px){.money{grid-template-columns:1fr}}
+.money div{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.money .amt{font-family:var(--display);font-size:1.5rem;font-weight:800;color:var(--lake);font-variant-numeric:tabular-nums}
+.check{font-size:.88rem;color:var(--glaze);font-weight:600}
+
+.warn{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
+.warn li{padding:12px 16px;border-left:4px solid var(--sun);background:var(--card);border-radius:0 10px 10px 0}
+.sources{font-size:.88rem;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+.sources a{color:var(--lake)}
+a:focus-visible{outline:2px solid var(--glaze);outline-offset:2px}
+
+/* quiz */
+.jump{display:inline-block;margin-top:2px;font-weight:700;color:var(--lake);text-decoration:underline;text-underline-offset:3px}
+.quiz{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;display:flex;flex-direction:column;gap:18px;min-width:0}
+.qtop{display:flex;justify-content:space-between;gap:12px;font-size:.85rem;color:var(--muted);font-weight:600}
+.qprog{height:6px;border-radius:99px;background:var(--h0);overflow:hidden}
+.qprog i{display:block;height:100%;background:var(--lake);border-radius:99px;transition:width .25s}
+.qq{font-family:var(--display);font-size:clamp(1.25rem,3vw,1.6rem);font-weight:700;line-height:1.2;margin:0}
+.qhint{color:var(--muted);font-size:.93rem;margin:0}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{font:inherit;text-align:left;background:var(--bg);color:var(--fg);border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;min-height:48px;transition:border-color .15s,background .15s}
+.opt:hover{border-color:var(--lake)}
+.opt[aria-checked="true"]{border-color:var(--lake);background:var(--lake-soft);font-weight:600}
+.opt:focus-visible,.btn:focus-visible{outline:2px solid var(--glaze);outline-offset:2px}
+.qnav{display:flex;gap:10px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:700;border-radius:999px;padding:10px 20px;cursor:pointer;border:1.5px solid var(--lake);background:transparent;color:var(--lake);min-height:44px}
+.btn.main{background:var(--lake);color:var(--bg)}
+.btn[disabled]{opacity:.4;cursor:default}
+.res{display:flex;flex-direction:column;gap:14px}
+.rcard{border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:8px;background:var(--bg);min-width:0}
+.rcard.first{border:2px solid var(--lake)}
+.rhead{display:flex;gap:12px;align-items:baseline}
+.rhead .rank{font-size:1.8rem}
+.rhead h3{flex:1}
+.rbar{height:8px;border-radius:99px;background:var(--h0);overflow:hidden}
+.rbar i{display:block;height:100%;background:var(--lake);border-radius:99px}
+.rcard ul{margin:0;padding-left:1.1em;font-size:.93rem;display:flex;flex-direction:column;gap:3px}
+.rcard .meta{color:var(--muted);font-size:.88rem}
+.rest{font-size:.92rem;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+.rest b{color:var(--fg)}
+.copybox{width:100%;min-height:120px;font:inherit;font-size:.9rem;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:10px;padding:10px}
+</style>
+
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">Brodnica · październik 2026 · wersja 3</span>
+  <h1>Co otworzyć w Brodnicy, żeby zarabiało cały rok</h1>
+  <p class="lead">Dwie wspólniczki, około czterdziestki, mały wkład własny. Tym razem szukamy firmy dla mieszkańców, bo to oni robią większość obrotu. Pomysły oparte na letnich turystach spadły na dalszy plan.</p>
+  <p><a class="jump" href="#quiz">Przejdź do quizu: 16 pytań, które podpowiedzą wybór</a></p>
+  <div class="brief">
+    <p><b>Jak to czytam.</b> Miasto ma około 28 tysięcy mieszkańców, a większość klientów (zakładamy około 80 procent) to ludzie stąd. Dobry pomysł musi zarabiać także w listopadzie. Sezon letni jest dodatkiem. Do tego dochodzi Twoja część: logo, strona, Facebook i wizytówka w Google, czyli to, przez co w małym mieście klienci znajdują firmę.</p>
+  </div>
+</header>
+
+<section>
+  <span class="eyebrow">Zanim cokolwiek wybiorą</span>
+  <h2>Dlaczego Żabka odpadła? Od tego zależy cała lista</h2>
+  <div class="filter">
+    <div><b>Godziny</b><span>Sklep otwarty codziennie zjada życie. Wtedy odpadają lokale czynne siedem dni w tygodniu, zostają usługi na zamówienie.</span></div>
+    <div><b>Ryzyko</b><span>Strach przed umową na lata. Wtedy wygrywa start bez lokalu i test przed dużym wydatkiem.</span></div>
+    <div><b>Pieniądze</b><span>Za mało gotówki na zapas. Wtedy najpierw usługi, gdzie kupuje się niewiele, a sprzęt później.</span></div>
+    <div><b>Brak serca</b><span>Sklep to cudzy pomysł. Wtedy warto iść za tym, co lubią robić: piec, gościć, porządkować.</span></div>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">Ranking według najmniejszego wkładu</span>
+  <h2>Trzy pomysły dla mieszkańców, które działają cały rok</h2>
+  <div class="podium">
+    <article class="pick top">
+      <span class="rank">1</span>
+      <h3>Pomoc w domu: sprzątanie, porządki, wsparcie seniorów</h3>
+      <p>Regularne sprzątanie mieszkań i domów, sprzątanie po remoncie, zakupy i towarzystwo dla starszych osób. Klienci to zapracowane rodziny, seniorzy i dzieci, które wyjechały z Brodnicy, a płacą za opiekę nad rodzicami.</p>
+      <dl class="facts">
+        <dt>Wkład</dt><dd>2–8 tys. zł (szacunek)</dd>
+        <dt>Rok</dt><dd>stały, szczyt przed Wielkanocą i świętami</dd>
+        <dt>Godziny</dt><dd>w dzień, w tygodniu</dd>
+        <dt>Ryzyko</dt><dd><span class="pill ok">niskie</span></dd>
+      </dl>
+      <p class="step"><b>Pierwszy krok:</b> pięciu pierwszych klientów z rodziny i znajomych, za opinie w Google i zdjęcia przed i po.</p>
+    </article>
+    <article class="pick">
+      <span class="rank">2</span>
+      <h3>Ciasta, torty i słodkie stoły na każdą okazję</h3>
+      <p>Chrzciny, komunie, osiemnastki, imieniny, Dzień Babci i Dzień Kobiet, firmowe spotkania. W miasteczku co tydzień ktoś ma urodziny. Pieczenie w kuchni wynajmowanej na godziny, bez własnego lokalu.</p>
+      <dl class="facts">
+        <dt>Wkład</dt><dd>5–15 tys. zł (szacunek)</dd>
+        <dt>Rok</dt><dd>stały, szczyt maj–czerwiec i grudzień</dd>
+        <dt>Godziny</dt><dd>wieczory i weekendy</dd>
+        <dt>Ryzyko</dt><dd><span class="pill ok">niskie</span></dd>
+      </dl>
+      <p class="step"><b>Pierwszy krok:</b> zapytać trzy sale weselne i restauracje o podnajem kuchni w dni bez imprez.</p>
+    </article>
+    <article class="pick">
+      <span class="rank">3</span>
+      <h3>Urodziny i zajęcia dla dzieci w wynajętej sali</h3>
+      <p>Pakiet dla rodziców: sala, tort, animacje, kawa dla dorosłych. W ferie zimowe i wakacje warsztaty i półkolonie. Rodzice z małego miasta szukają miejsca, gdzie nie muszą sprzątać po imprezie.</p>
+      <dl class="facts">
+        <dt>Wkład</dt><dd>10–25 tys. zł (szacunek)</dd>
+        <dt>Rok</dt><dd>stały, ferie i wakacje to szczyt</dd>
+        <dt>Godziny</dt><dd>weekendy i popołudnia</dd>
+        <dt>Ryzyko</dt><dd><span class="pill ok">niskie</span></dd>
+      </dl>
+      <p class="step"><b>Pierwszy krok:</b> zapytać dwa miejsca (sala, klub, dom kultury) o cenę wynajmu na godziny w weekendy.</p>
+    </article>
+  </div>
+  <p>Dwójka i trójka sklejają się w jedną firmę: tort z numeru dwa jest sercem urodzin z numeru trzy. Jedynka daje stały dochód w tygodniu, kiedy jest mało zamówień na ciasta.</p>
+</section>
+
+<section>
+  <span class="eyebrow">Dodane na prośbę</span>
+  <h2>Jedzenie pudełkowe z dowozem (dieta pudełkowa)</h2>
+  <div class="podium">
+    <article class="pick">
+      <h3>Obiady i diety w pudełkach, dowóz pod drzwi</h3>
+      <p>Stali klienci wybierają tygodniowy plan, a Wy gotujecie raz w tygodniu większe partie i rozwozicie rano po Brodnicy. To abonament, więc pieniądze wpływają co tydzień. Pasują: zapracowane rodziny, firmy zamawiające obiady dla zespołu, seniorzy. Dla seniorów można dodać mniejsze porcje i prosty zestaw lekkich dań, a dla firm obiady na stałe dni tygodnia.</p>
+      <dl class="facts">
+        <dt>Wkład</dt><dd>15–40 tys. zł (szacunek: pojemniki, sprzęt, chłodnia przy dowozie, samochód Wasz lub z umowy)</dd>
+        <dt>Rok</dt><dd>stały, lekki spadek w wakacjach i szczyt po nowym roku</dd>
+        <dt>Godziny</dt><dd>gotowanie dzień wcześniej, dowóz rano, pięć dni w tygodniu</dd>
+        <dt>Ryzyko</dt><dd><span class="pill mid">średnie</span></dd>
+      </dl>
+      <p class="step"><b>Pierwszy krok:</b> test na dwudziestu zamówieniach na jeden tydzień, w tym z kilku firm i od rodziny. Do sprawdzenia przed startem: rejestracja w sanepidzie, czy wynajęta kuchnia ma zgodę na produkcję na sprzedaż i jakie wymagania ma transport gotowego jedzenia. Konkurencji w Brodnicy (inne firmy z dietą pudełkową, bary z obiadami) nie sprawdzałam, to Wasza lista do obejścia.</p>
+      <p class="step"><b>Uwaga:</b> to praca pięć dni w tygodniu, więc jeśli Żabka odpadła przez godziny, ten pomysł tego nie rozwiązuje. Dlatego zostaje na liście z ryzykiem średnim, a nie w trójce.</p>
+    </article>
+  </div>
+</section>
+
+<section class="theirs">
+  <span class="eyebrow" style="color:var(--glaze)">Ich własny pomysł</span>
+  <h2>Kawiarnia dla mieszkańców, z lodami jako letnim dodatkiem</h2>
+  <div class="two">
+    <div>
+      <h3>Co w tym jest mądre</h3>
+      <ul>
+        <li>Kawa i ciasto sprzedają się codziennie i dają najwyższy zysk na sztuce. To one niosą rok, a lody dokładają kasy w trzy miesiące.</li>
+        <li>Kącik dla dzieci robi z kawiarni miejsce, do którego mamy wracają w tygodniu przed południem. W małym mieście to stali klienci.</li>
+        <li>Tłusty Czwartek to jeden dzień, który potrafi dać utarg tygodnia. W 2027 roku wypada 4 lutego.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Gdzie boli</h3>
+      <ul>
+        <li>Lokal z kuchnią i kącikiem dla dzieci to 80–150 tys. zł (szacunek). Z witryną na lody i smażeniem nawet 120–250 tys. zł.</li>
+        <li>Czynsz płaci się też w deszczowym lutym. Z samych lodów ten rachunek się nie zamknie.</li>
+        <li>Kawiarnia zwykle jest otwarta prawie codziennie. Jeśli Żabka odpadła przez godziny, to ten sam problem.</li>
+      </ul>
+    </div>
+  </div>
+  <h3>Bezpieczna ścieżka</h3>
+  <div class="path">
+    <div><small>Zima 2026/27</small><b>Ciasta na zamówienie</b><span>Z wynajętej kuchni, z Tłustym Czwartkiem i pączkami jako jednym z produktów. Sprawdzają, czy ludzie wracają.</span></div>
+    <div><small>Sezon 2027</small><b>Urodziny i zajęcia</b><span>Wynajęta sala, pakiety dla rodziców. Uczą się, co klienci kupują i za ile.</span></div>
+    <div><small>Wiosna 2028</small><b>Kawiarnia z kącikiem</b><span>Jeśli liczby się zgadzają. Klienci już je znają, lody dochodzą latem.</span></div>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">Twoja część</span>
+  <h2>Co cyfrowego da tej firmie najwięcej</h2>
+  <p>W mieście tej wielkości klient szuka w Google albo na Facebooku i patrzy na opinie. Kolejność: najpierw nazwa i logo, potem wizytówka w Google, potem Facebook, strona na końcu.</p>
+  <div class="money">
+    <div>
+      <h3>Nazwa i logo</h3>
+      <p>Jedna nazwa na całą ścieżkę, od ciast po kawiarnię, żeby nie zmieniać jej za dwa lata. Przed logo sprawdzić, czy wolna jest nazwa i adres strony.</p>
+      <p class="check">Do ustalenia z paniami: nazwa, kolory, czy w logo ma być miasto.</p>
+    </div>
+    <div>
+      <h3>Wizytówka w Google</h3>
+      <p>Główne źródło klientów w małym mieście: zdjęcia, telefon, opinie, godziny. Firma bez lokalu może wskazać obszar, na którym działa.</p>
+      <p class="check">Zasady Google dla firm bez adresu zmieniają się, więc sprawdzić przy zakładaniu, czy wizytówkę zatwierdzą.</p>
+    </div>
+    <div>
+      <h3>Facebook</h3>
+      <p>Strona firmy ze zdjęciami realizacji i kalendarzem wolnych terminów. Do tego obecność w lokalnych grupach mieszkańców Brodnicy, gdzie rozchodzą się polecenia.</p>
+      <p class="check">Zasady ogłoszeń w grupach są różne, więc pytać administratorów przed pierwszym postem.</p>
+    </div>
+    <div>
+      <h3>Strona i narzędzia</h3>
+      <p>Jedna strona z cennikiem, galerią i formularzem zamówienia. Do tego kalendarz zajętych terminów sali, kod do zeskanowania na pudełkach z linkiem do opinii w Google i przypomnienie klientkom o urodzinach dziecka za miesiąc.</p>
+      <p class="check">Przypomnienia tylko do osób, które się na nie zgodziły.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">Kiedy jest ruch</span>
+  <h2>Rok w Brodnicy, miesiąc po miesiącu</h2>
+  <div class="yearbox">
+    <div class="year" role="table" aria-label="Orientacyjny ruch w ciągu roku">
+      <span></span>
+      <span class="m">I</span><span class="m">II</span><span class="m">III</span><span class="m">IV</span><span class="m">V</span><span class="m">VI</span><span class="m">VII</span><span class="m">VIII</span><span class="m">IX</span><span class="m">X</span><span class="m">XI</span><span class="m">XII</span>
+      <span class="lab">Kawa i ciasta</span>
+      <i class="c c2"></i><i class="c c2"></i><i class="c c2"></i><i class="c c2"></i><i class="c c2"></i><i class="c c2"></i><i class="c c2"></i><i class="c c2"></i><i class="c c2"></i><i class="c c2"></i><i class="c c2"></i><i class="c c3"></i>
+      <span class="lab">Uroczystości</span>
+      <i class="c c2"></i><i class="c c3 mark" title="Tłusty Czwartek: 4 lutego 2027"></i><i class="c c2"></i><i class="c c2"></i><i class="c c3"></i><i class="c c3"></i><i class="c c2"></i><i class="c c2"></i><i class="c c3"></i><i class="c c2"></i><i class="c c2"></i><i class="c c3"></i>
+      <span class="lab">Pomoc w domu</span>
+      <i class="c c2"></i><i class="c c2"></i><i class="c c3"></i><i class="c c2"></i><i class="c c2"></i><i class="c c2"></i><i class="c c1"></i><i class="c c1"></i><i class="c c2"></i><i class="c c2"></i><i class="c c2"></i><i class="c c3"></i>
+      <span class="lab">Dzieci</span>
+      <i class="c c3"></i><i class="c c3"></i><i class="c c2"></i><i class="c c2"></i><i class="c c2"></i><i class="c c2"></i><i class="c c3"></i><i class="c c3"></i><i class="c c2"></i><i class="c c2"></i><i class="c c2"></i><i class="c c3"></i>
+      <span class="lab">Lody</span>
+      <i class="c c0"></i><i class="c c0"></i><i class="c c1"></i><i class="c c1"></i><i class="c c2"></i><i class="c c3"></i><i class="c c3"></i><i class="c c3"></i><i class="c c1"></i><i class="c c0"></i><i class="c c0"></i><i class="c c0"></i>
+    </div>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--h0)"></i>cisza</span>
+    <span><i style="background:var(--h1)"></i>trochę</span>
+    <span><i style="background:var(--h2)"></i>dużo</span>
+    <span><i style="background:var(--h3)"></i>szczyt</span>
+    <span><i style="background:transparent;outline:2px solid var(--glaze)"></i>Tłusty Czwartek</span>
+  </div>
+  <p style="color:var(--muted);font-size:.9rem">Pasek jest orientacyjny, ułożony z typowego rytmu branży, bez lokalnych danych o ruchu w Brodnicy. Wniosek: cztery górne rzędy nie mają pustych miesięcy, a lody ma tylko lato. Dlatego lody są letnim dodatkiem do reszty.</p>
+</section>
+
+<section>
+  <span class="eyebrow">Pełna lista</span>
+  <h2>Wszystkie pomysły obok siebie</h2>
+  <div class="tbl">
+    <table>
+      <thead><tr><th>Pomysł</th><th>Wkład (szacunek)</th><th>Cały rok?</th><th>Godziny</th><th>Ryzyko</th></tr></thead>
+      <tbody>
+        <tr><td>Pomoc w domu i dla seniorów</td><td class="num">2–8 tys. zł</td><td>tak</td><td>w tygodniu, w dzień</td><td><span class="pill ok">niskie</span></td></tr>
+        <tr><td>Ciasta, torty, słodkie stoły</td><td class="num">5–15 tys. zł</td><td>tak</td><td>wieczory, weekendy</td><td><span class="pill ok">niskie</span></td></tr>
+        <tr><td>Pranie i prasowanie z odbiorem i dowozem</td><td class="num">8–20 tys. zł</td><td>tak</td><td>w tygodniu</td><td><span class="pill ok">niskie</span></td></tr>
+        <tr><td>Pudełka prezentowe dla firm i rodzin, sprzedaż w internecie i odbiór</td><td class="num">8–20 tys. zł</td><td>tak, szczyty przed świętami</td><td>elastyczne</td><td><span class="pill ok">niskie</span></td></tr>
+        <tr><td>Urodziny i zajęcia dla dzieci w wynajętej sali</td><td class="num">10–25 tys. zł</td><td>tak</td><td>popołudnia, weekendy</td><td><span class="pill ok">niskie</span></td></tr>
+        <tr><td>Odzież dziecięca z drugiej ręki, sklepik i internet</td><td class="num">10–30 tys. zł</td><td>tak</td><td>stałe</td><td><span class="pill mid">średnie</span></td></tr>
+        <tr><td>Mobilny bar z kawą i lodami (uroczystości, jarmarki)</td><td class="num">30–70 tys. zł</td><td>częściowo</td><td>wybierane</td><td><span class="pill mid">średnie</span></td></tr>
+        <tr><td>Okienko z kawą i ciastem na ruchliwej ulicy</td><td class="num">30–70 tys. zł</td><td>tak</td><td>prawie codziennie</td><td><span class="pill mid">średnie</span></td></tr>
+        <tr><td>Jedzenie pudełkowe z dowozem (abonament tygodniowy)</td><td class="num">15–40 tys. zł</td><td>tak</td><td>poniedziałek–piątek, rano</td><td><span class="pill mid">średnie</span></td></tr>
+        <tr><td>Obiady domowe na wynos dla firm i mieszkańców</td><td class="num">40–100 tys. zł</td><td>tak</td><td>poniedziałek–piątek</td><td><span class="pill mid">średnie</span></td></tr>
+        <tr><td>Kawiarnia z kącikiem dla małych dzieci</td><td class="num">80–150 tys. zł</td><td>tak</td><td>prawie codziennie</td><td><span class="pill hi">wysokie</span></td></tr>
+        <tr><td>Lokal z lodami, pączkami i kawą</td><td class="num">120–250 tys. zł</td><td>lody tylko latem</td><td>prawie codziennie</td><td><span class="pill hi">wysokie</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">Szalej</span>
+  <h2>Pomysły z przymrużeniem oka, ale do policzenia</h2>
+  <div class="crazy">
+    <div><b>Opieka na odległość nad rodzicami</b><span>Dzieci z Trójmiasta albo Warszawy płacą miesięczny abonament: wizyta, zakupy, obiad raz w tygodniu i zdjęcie w wiadomości. Bez czynności medycznych.</span></div>
+    <div><b>Kawiarnia z wieczorami</b><span>Rano kącik dla dzieci, wieczorem gry planszowe, klub książki, malowanie i ceramika w małych grupach. Bilet na wydarzenie zapełnia pustkę po południu.</span></div>
+    <div><b>Śniadania dla firm</b><span>Co tydzień paczka kanapek i ciast dla małych zespołów i urzędów. Płatna z góry za miesiąc, więc wiadomo, ile upiec.</span></div>
+    <div><b>Szkoła pieczenia dla dzieci</b><span>Zajęcia w ferie, urodziny z własnoręcznie zrobionym ciastem. Bilet za udział, zero ryzyka niesprzedanego towaru.</span></div>
+    <div><b>Przypominajka o okazjach</b><span>Mama zamawia tort na urodziny dziecka co roku. Wiadomość za miesiąc przed terminem z jednym kliknięciem robi z klientki stałą klientkę.</span></div>
+    <div><b>Pączki w Tłusty Czwartek</b><span>Jeden dzień, bardzo duży utarg: zamówienia z góry od firm i rodzin, odbiór w wynajętej kuchni. Pierwszy test całego pomysłu, w lutym 2027.</span></div>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">Skąd wziąć pieniądze</span>
+  <h2>Cztery drogi, każdą trzeba potwierdzić na miejscu</h2>
+  <div class="money">
+    <div>
+      <h3>Dotacja z urzędu pracy</h3>
+      <span class="amt">do ok. 55 tys. zł</span>
+      <p>Tyle wynosi górny limit w 2026 roku. Ile daje urząd w Brodnicy, ustala jego własny regulamin. Trzeba być zarejestrowaną osobą bezrobotną.</p>
+      <p class="check">Zapytać w urzędzie: czy obie mogą dostać dotację i potem założyć spółkę cywilną.</p>
+    </div>
+    <div>
+      <h3>Pożyczka „Pierwszy biznes”</h3>
+      <span class="amt">do ok. 55 tys. zł</span>
+      <p>Pożyczka państwowa na start z niskim oprocentowaniem. Do połowy kwoty może zostać umorzone po roku działania i spłacaniu na czas.</p>
+      <p class="check">Aktualne oprocentowanie i warunki na stronie Banku Gospodarstwa Krajowego.</p>
+    </div>
+    <div>
+      <h3>Lokalna grupa działania „Pojezierze Brodnickie”</h3>
+      <span class="amt">premia na start</span>
+      <p>Takie premie bywają wyższe niż dotacja z urzędu pracy, ale nie znaleźliśmy ogłoszonego naboru na 2026 rok. Miasta powyżej około 20 tysięcy mieszkańców często są wyłączone, a Brodnica ma 28 tysięcy.</p>
+      <p class="check">Jeśli Brodnica odpada, firma zarejestrowana w gminie wiejskiej obok może się zmieścić. Zadzwonić do biura grupy.</p>
+    </div>
+    <div>
+      <h3>Start bez firmy</h3>
+      <span class="amt">10 813,50 zł na kwartał</span>
+      <p>Do tej kwoty przychodu można sprzedawać bez zakładania firmy i bez składek. Dobre do sprawdzenia, czy usługa się sprzedaje, na przykład sprzątanie albo pierwsze torty. Po założeniu firmy przez pół roku można nie płacić składek społecznych.</p>
+      <p class="check">Jedzenie i tak wymaga rejestracji w sanepidzie, także przy starcie bez firmy.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <span class="eyebrow">Na co uważać</span>
+  <h2>Trzy pułapki, które łatwo przeoczyć</h2>
+  <ul class="warn">
+    <li><b>Sanepid.</b> Każda sprzedaż jedzenia wymaga wpisu do rejestru. Wniosek składa się co najmniej 14 dni przed startem, a lepiej miesiąc wcześniej. Domowa kuchnia zwykle nie przejdzie bez osobnego zatwierdzenia, dlatego kuchnia wynajmowana na godziny.</li>
+    <li><b>Dzieci i seniorzy.</b> Półkolonie i wypoczynek dzieci mają osobne zasady zgłaszania, a opieka nad starszymi osobami ma granicę przy czynnościach medycznych. Do sprawdzenia w kuratorium oświaty i w urzędzie miasta, zanim padnie pierwsza oferta.</li>
+    <li><b>Konkurencja nie jest sprawdzona.</b> Nie wiemy, ile cukierni, kawiarni, firm sprzątających i sal na urodziny działa dziś w Brodnicy. Zadanie domowe: spacer po rynku i osiedlach plus mapa w telefonie, wpisać „cukiernia”, „kawiarnia”, „sprzątanie”, „urodziny dla dzieci” i policzyć.</li>
+  </ul>
+</section>
+
+<section id="quiz">
+  <span class="eyebrow">Na koniec</span>
+  <h2>Quiz: który pomysł pasuje do Was najbardziej</h2>
+  <p>Szesnaście krótkich pytań, mniej niż pięć minut. Można odpowiadać razem albo każda osobno, a potem porównać wyniki. Wynik pokazuje trzy najlepiej dopasowane pomysły z listy powyżej i powód, dla którego pasują. Pomysły, na które nie starcza budżetu albo które kłócą się z odpowiedziami, odpadają z wyjaśnieniem.</p>
+  <div class="quiz" id="quizbox" aria-live="polite"></div>
+</section>
+<script>
+(function(){
+var IDEAS=[
+ {id:"dom",name:"Pomoc w domu i dla seniorów",min:2,max:8,p:{clean:1,seniors:.7,people:.5,physical:1,online:.3,fast:1,growth:.2,lowrisk:1},step:"Pięciu pierwszych klientów z rodziny i znajomych, za opinie w Google i zdjęcia przed i po."},
+ {id:"ciasta",name:"Ciasta, torty i słodkie stoły na zamówienie",min:5,max:15,p:{bake:1,people:.3,online:.7,physical:.5,fast:.8,growth:.4,lowrisk:.9,kids:.3,dream:.3},step:"Zapytać trzy sale weselne i restauracje o podnajem kuchni w dni bez imprez. Złożyć wniosek w sanepidzie."},
+ {id:"pranie",name:"Pranie i prasowanie z odbiorem i dowozem",min:8,max:20,p:{clean:.6,physical:.8,online:.4,fast:.6,growth:.3,lowrisk:.8,place:.3,people:.3},step:"Zapytać o ceny maszyn używanych i policzyć trasę dowozu w mieście."},
+ {id:"prezenty",name:"Pudełka prezentowe dla firm i rodzin",min:8,max:20,p:{bake:.3,online:1,physical:.3,fast:.6,growth:.5,lowrisk:.8,people:.3,dream:.2},step:"Przygotować trzy gotowe pudełka na święta i zebrać zamówienia z góry od firm."},
+ {id:"urodziny",name:"Urodziny i zajęcia dla dzieci w wynajętej sali",min:10,max:25,p:{bake:.5,kids:1,people:1,online:.6,fast:.5,growth:.6,lowrisk:.8,place:.3,dream:.4},step:"Zapytać dwa miejsca (sala, klub, dom kultury) o cenę wynajmu na godziny w weekendy."},
+ {id:"odziez",name:"Odzież dziecięca z drugiej ręki",min:10,max:30,p:{kids:.6,online:.8,people:.6,physical:.3,fast:.4,growth:.5,lowrisk:.6,place:.8,daily:.8},step:"Zacząć od sprzedaży w internecie z własnej szafy i od znajomych, sklepik później."},
+ {id:"bar",name:"Mobilny bar z kawą i lodami",min:30,max:70,p:{bake:.8,people:1,online:.5,physical:.7,fast:.3,growth:.5,lowrisk:.5,dream:.8},step:"Zapytać gminę i właścicieli terenów o zgodę na handel w sezonie 2027."},
+ {id:"okienko",name:"Okienko z kawą i ciastem na ruchliwej ulicy",min:30,max:70,p:{bake:.6,people:1,physical:.6,daily:1,place:1,growth:.4,lowrisk:.5,dream:.7,fast:.5},step:"Policzyć przechodniów w trzech miejscach o różnych porach i zapytać o czynsz."},
+ {id:"pudelka",name:"Jedzenie pudełkowe z dowozem",min:15,max:40,p:{bake:.9,physical:.9,daily:.6,online:.8,people:.3,growth:.6,lowrisk:.5,fast:.5,seniors:.3},step:"Test na dwudziestu zamówieniach przez jeden tydzień, w tym z kilku firm. Sprawdzić sanepid i zasady transportu jedzenia."},
+ {id:"obiady",name:"Obiady domowe na wynos dla firm i mieszkańców",min:40,max:100,p:{bake:.9,physical:.9,daily:.7,online:.5,people:.4,growth:.5,lowrisk:.5,place:.5,fast:.4},step:"Przetestować menu w pięciu firmach w okolicy i sprawdzić, czy zamówią drugi raz."},
+ {id:"kawiarnia",name:"Kawiarnia z kącikiem dla małych dzieci",min:80,max:150,p:{bake:.7,people:1,kids:.8,daily:1,place:1,growth:1,lowrisk:.2,dream:1,physical:.6,fast:.1},step:"Najpierw ścieżka testowa: ciasta na zamówienie i urodziny, a lokal po pierwszym roku."},
+ {id:"lokal",name:"Lokal z lodami, pączkami i kawą",min:120,max:250,p:{bake:.8,people:1,daily:1,place:1,growth:1,lowrisk:.1,dream:1,physical:.7,fast:.1,kids:.5},step:"Najpierw ścieżka testowa: pączki na Tłusty Czwartek w lutym 2027 z wynajętej kuchni."}
+];
+var Q=[
+ {q:"Dlaczego Żabka odpadła?",h:"To pytanie z początku strony. Wybierzcie najbliższą odpowiedź.",o:[
+  {l:"Przez godziny: praca siedem dni w tygodniu",w:{daily:-3,place:-1},why:"unika pracy siedem dni w tygodniu"},
+  {l:"Przez strach przed umową na lata i ryzykiem",w:{lowrisk:3,place:-2},why:"nie wymaga ryzykownych zobowiązań"},
+  {l:"Przez za mało pieniędzy na zapas",w:{lowrisk:1.5,fast:2},why:"szybko przynosi pierwsze pieniądze"},
+  {l:"To nie był nasz pomysł",w:{dream:1.5},why:"jest bliższy waszym pomysłom"},
+  {l:"Inny powód albo nie wiem",w:{}}]},
+ {q:"Ile mogłyby wyłożyć z własnych oszczędności?",h:"Razem, bez pożyczek i dotacji. Wkład to szacunek, to nie wycena.",o:[
+  {l:"Do 8 tys. zł",cap:8},{l:"Do 25 tys. zł",cap:25},{l:"Do 70 tys. zł",cap:70},{l:"Do 150 tys. zł",cap:150},{l:"Ponad 150 tys. zł",cap:400}]},
+ {q:"Czy chcą starać się o dotację z urzędu pracy albo pożyczkę na start?",h:"Do około 55 tys. zł. Warunki trzeba sprawdzić w urzędzie, więc to odpowiedź na dziś.",o:[
+  {l:"Tak, chcemy złożyć wniosek",grant:55},{l:"Jeszcze nie wiemy",grant:0},{l:"Nie, wystarczą własne pieniądze",grant:0}]},
+ {q:"Kiedy mogłyby pracować?",o:[
+  {l:"W tygodniu w dzień",w:{daily:-1.5,kids:-.5},why:"praca mieści się w ciągu tygodnia"},
+  {l:"Wieczorami i w weekendy",w:{kids:1,bake:.5},why:"praca przypada na wieczory i weekendy"},
+  {l:"Dowolnie, zależnie od zamówień",w:{online:1,fast:.5},why:"da się układać wokół zamówień"},
+  {l:"Każdego dnia, w stałym miejscu",w:{daily:2,place:1},why:"praca odbywa się w jednym stałym miejscu"}]},
+ {q:"Jak z umową najmu lokalu na kilka lat?",o:[
+  {l:"Boimy się takiej umowy",noPlace:1},
+  {l:"Dopiero po tym, jak sprawdzimy pomysł na małą skalę",w:{place:-1,growth:1},why:"pozwala najpierw sprawdzić pomysł"},
+  {l:"Jesteśmy gotowe, jeśli rachunek się spina",w:{place:1.5,growth:1},why:"daje drogę do własnego lokalu"}]},
+ {q:"Jak z obsługą klientów twarzą w twarz?",o:[
+  {l:"Lubimy, to nasza mocna strona",w:{people:2},why:"opiera się na kontakcie z klientami"},
+  {l:"Wolimy telefon i internet",w:{online:2,people:-1.5},why:"obsługa idzie przez telefon i internet"},
+  {l:"Wolimy pracować bez klientów w pobliżu",w:{people:-2.5,online:1},why:"nie wymaga stałej obsługi klientów"}]},
+ {q:"Jak z pieczeniem i gotowaniem?",o:[
+  {l:"Lubimy piec, to nasza mocna strona",w:{bake:3},why:"stoi na pieczeniu"},
+  {l:"Gotować umiemy, piec mniej",w:{bake:1.5},why:"opiera się na gotowaniu"},
+  {l:"Żadna z nas nie lubi kuchni",w:{bake:-5}}]},
+ {q:"Jak z pracą fizyczną?",o:[
+  {l:"Lubimy ruch i pracę rękami",w:{physical:1.5},why:"daje ruch i pracę rękami"},
+  {l:"Wolimy mało pracy fizycznej",w:{physical:-2.5,online:1},why:"jest lekka fizycznie"},
+  {l:"Zależy od dnia",w:{}}]},
+ {q:"Jak z dziećmi?",o:[
+  {l:"Lubimy dzieci i chętnie z nimi pracujemy",w:{kids:3},why:"opiera się na pracy z dziećmi"},
+  {l:"Wolimy dorosłych klientów",w:{kids:-2},why:"dotyczy dorosłych klientów"},
+  {l:"Bez znaczenia",w:{}}]},
+ {q:"Jak z pomaganiem starszym osobom?",o:[
+  {l:"Chętnie pomagamy",w:{seniors:3},why:"daje pracę dla seniorów i ich rodzin"},
+  {l:"Raczej nie, to nie dla nas",w:{seniors:-2.5},why:"nie dotyczy seniorów"}]},
+ {q:"Jak z sprzedażą w internecie i na Facebooku?",h:"Logo, stronę, Facebooka i wizytówkę w Google zrobi dla Was ktoś z zewnątrz, więc odpowiedź nie zależy od umiejętności.",o:[
+  {l:"Chętnie, z pomocą przy stronie i profilach",w:{online:2},why:"mocno korzysta ze strony i profili w internecie"},
+  {l:"Wolimy sprzedaż na miejscu i z polecenia",w:{online:-1,people:1},why:"sprzedaje się z polecenia"}]},
+ {q:"Jak szybko mają pojawić się pierwsze pieniądze?",o:[
+  {l:"W ciągu 1–2 miesięcy",w:{fast:3},why:"szybko daje pierwsze pieniądze"},
+  {l:"Pół roku to w porządku",w:{fast:1}},
+  {l:"Rok albo dłużej, jeśli to dobry plan",w:{fast:-1,growth:1.5},why:"buduje coś większego w dłuższym czasie"}]},
+ {q:"Jakie ryzyko jest do przyjęcia?",o:[
+  {l:"Spokojny sen ważniejszy niż duży zysk",w:{lowrisk:3},why:"ma niskie ryzyko"},
+  {l:"Umiarkowane, po policzeniu",w:{lowrisk:.5}},
+  {l:"Większe, jeśli zysk może być duży",w:{lowrisk:-2,growth:1},why:"daje szansę na duży zysk"}]},
+ {q:"Jak widzą firmę za trzy lata?",o:[
+  {l:"Mała firma tylko dla nas dwóch",w:{growth:-2,lowrisk:.5},why:"zostaje małą firmą dla dwóch osób"},
+  {l:"Rozwój powoli, może jedna osoba do pomocy",w:{growth:1},why:"da się powoli rozwijać"},
+  {l:"Własny lokal i zespół",w:{growth:2.5,place:1},why:"prowadzi do własnego lokalu"}]},
+ {q:"Jak ważna jest kawiarnia albo lodziarnia z marzeń?",o:[
+  {l:"Bardzo, to jest marzenie",w:{dream:4},why:"jest blisko waszego marzenia"},
+  {l:"Fajnie, ale jesteśmy otwarte na inne pomysły",w:{dream:1.5}},
+  {l:"Marzenie przeszło, szukamy tego, co zarabia",w:{dream:-1.5}}]},
+ {q:"Czy obie zaczną w firmie od razu na pełny etat?",o:[
+  {l:"Tak, obie od początku",w:{growth:1,daily:.5},why:"daje pracę dla dwóch osób"},
+  {l:"Jedna zostaje na etacie, druga zaczyna",w:{lowrisk:2,daily:-1},why:"da się zacząć w dwie osoby po trochu"}]}
+];
+var box=document.getElementById("quizbox"),ans=[],cur=0;
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function render(){
+ box.textContent="";
+ if(cur>=Q.length){return result()}
+ var q=Q[cur];
+ var top=el("div","qtop");top.appendChild(el("span",null,"Pytanie "+(cur+1)+" z "+Q.length));box.appendChild(top);
+ var pr=el("div","qprog"),pi=el("i");pi.style.width=((cur)/Q.length*100)+"%";pr.appendChild(pi);box.appendChild(pr);
+ box.appendChild(el("h3","qq",q.q));
+ if(q.h)box.appendChild(el("p","qhint",q.h));
+ var og=el("div","opts");og.setAttribute("role","radiogroup");og.setAttribute("aria-label",q.q);
+ q.o.forEach(function(o,i){
+  var b=el("button","opt",o.l);b.type="button";b.setAttribute("role","radio");b.setAttribute("aria-checked",ans[cur]===i?"true":"false");
+  b.onclick=function(){ans[cur]=i;setTimeout(function(){cur++;render();box.scrollIntoView({block:"nearest"})},140)};
+  og.appendChild(b)});
+ box.appendChild(og);
+ var nav=el("div","qnav");
+ var back=el("button","btn","Wstecz");back.type="button";back.disabled=cur===0;back.onclick=function(){cur--;render()};nav.appendChild(back);
+ if(ans[cur]!=null){var nx=el("button","btn main","Dalej");nx.type="button";nx.onclick=function(){cur++;render()};nav.appendChild(nx)}
+ box.appendChild(nav);
+}
+function compute(){
+ var cap=0,grant=0,noPlace=false;
+ Q.forEach(function(q,qi){var o=q.o[ans[qi]];if(o.cap!=null)cap=o.cap;if(o.grant)grant=o.grant;if(o.noPlace)noPlace=true});
+ var res=[],out=[];
+ IDEAS.forEach(function(d){
+  var s=0,why=[];
+  Q.forEach(function(q,qi){var o=q.o[ans[qi]];if(!o.w)return;var c=0;for(var t in o.w){c+=o.w[t]*(d.p[t]||0)}s+=c;if(c>=1.3&&o.why)why.push({c:c,w:o.why})});
+  var ex=null;
+  if(d.min>cap+grant)ex="Wkład zaczyna się od "+d.min+" tys. zł (szacunek), a macie do dyspozycji około "+(cap+grant)+" tys. zł.";
+  else if(noPlace&&d.p.place>=.8)ex="Wymaga stałego lokalu i umowy najmu, a ta umowa Was niepokoi.";
+  if(ex){out.push({d:d,ex:ex});return}
+  why.sort(function(a,b){return b.c-a.c});
+  res.push({d:d,s:s,why:why.slice(0,3).map(function(x){return x.w}),needGrant:d.min>cap})});
+ res.sort(function(a,b){return b.s-a.s});
+ return {res:res,out:out,cap:cap,grant:grant};
+}
+function result(){
+ var r=compute(),top=r.res.slice(0,3),mx=top.length?top[0].s:1,mn=r.res.length?r.res[r.res.length-1].s:0;
+ box.appendChild(el("span","eyebrow","Wynik"));
+ box.appendChild(el("h3","qq",top.length?"Najlepiej pasują do Was te trzy pomysły":"Przy tych odpowiedziach nic nie przechodzi"));
+ var wrap=el("div","res");
+ top.forEach(function(x,i){
+  var c=el("div","rcard"+(i===0?" first":""));
+  var h=el("div","rhead");h.appendChild(el("span","rank",String(i+1)));h.appendChild(el("h3",null,x.d.name));c.appendChild(h);
+  var bar=el("div","rbar"),bi=el("i");var pct=mx===mn?100:Math.round(25+75*(x.s-mn)/(mx-mn));bi.style.width=pct+"%";bar.appendChild(bi);c.appendChild(bar);
+  if(x.why.length){var ul=el("ul");x.why.forEach(function(w){ul.appendChild(el("li",null,"Pasuje, bo "+w+"."))});c.appendChild(ul)}
+  c.appendChild(el("p","meta","Wkład: "+x.d.min+"–"+x.d.max+" tys. zł (szacunek)."+(x.needGrant?" Przy Waszych oszczędnościach wymaga dotacji albo pożyczki.":"")));
+  c.appendChild(el("p","meta","Pierwszy krok: "+x.d.step));
+  wrap.appendChild(c)});
+ box.appendChild(wrap);
+ var rest=r.res.slice(3);
+ if(rest.length){var d=el("div","rest");d.appendChild(el("b",null,"Dalsze miejsca:"));rest.forEach(function(x,i){d.appendChild(el("span",null,(i+4)+". "+x.d.name))});box.appendChild(d)}
+ if(r.out.length){var d2=el("div","rest");d2.appendChild(el("b",null,"Odpadły:"));r.out.forEach(function(x){d2.appendChild(el("span",null,x.d.name+". "+x.ex))});box.appendChild(d2)}
+ box.appendChild(el("p","qhint","Wynik to podpowiedź z szesnastu odpowiedzi, a pomysły i kwoty to szacunki. Konkurencji w Brodnicy nikt jeszcze nie policzył, więc przed decyzją trzeba sprawdzić miasto na miejscu."));
+ var txt="Wynik quizu (Brodnica):\n"+top.map(function(x,i){return (i+1)+". "+x.d.name}).join("\n");
+ var ta=el("textarea","copybox");ta.value=txt;ta.readOnly=true;ta.setAttribute("aria-label","Wynik do skopiowania");box.appendChild(ta);
+ var nav=el("div","qnav");
+ var cp=el("button","btn main","Skopiuj wynik");cp.type="button";
+ cp.onclick=function(){try{ta.select();var p=navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(txt):null;if(!p)document.execCommand("copy");cp.textContent="Skopiowano"}catch(e){cp.textContent="Zaznacz i skopiuj ręcznie"}};
+ nav.appendChild(cp);
+ var rs=el("button","btn","Zacznij od nowa");rs.type="button";rs.onclick=function(){ans=[];cur=0;render()};nav.appendChild(rs);
+ var bk=el("button","btn","Wstecz");bk.type="button";bk.onclick=function(){cur=Q.length-1;render()};nav.appendChild(bk);
+ box.appendChild(nav);
+}
+render();
+document.querySelectorAll(".jump").forEach(function(a){a.addEventListener("click",function(e){e.preventDefault();document.getElementById("quiz").scrollIntoView({behavior:"smooth"})})});
+})();
+</script>
+
+<section class="sources">
+  <span class="eyebrow">Źródła</span>
+  <span>Liczba mieszkańców Brodnicy (dane GUS na koniec 2024): <a href="https://www.polskawliczbach.pl/Brodnica" target="_blank" rel="noopener">polskawliczbach.pl</a></span>
+  <span>Limit startu bez firmy w 2026: <a href="https://direct.money.pl/artykuly/porady/dzialalnosc-nierejestrowana-2026-limit-10-813,50-zl,-po-przekroczeniu-7-dni-na-ceidg" target="_blank" rel="noopener">money.pl</a></span>
+  <span>Dotacja z urzędu pracy i pożyczka na start w 2026: <a href="https://www.infakt.pl/blog/?p=83137" target="_blank" rel="noopener">infakt.pl</a></span>
+  <span>Harmonogram naborów lokalnej grupy działania: <a href="https://kujawsko-pomorskie.pl/wp-content/uploads/pliki/2025/lgd/harmonogramy/lgd_pojezierze_brodnickie_202501.pdf" target="_blank" rel="noopener">kujawsko-pomorskie.pl</a></span>
+  <span>Kwoty wkładu i rytm roku to szacunki bez wycen i bez danych lokalnych. Przed decyzją warto wziąć dwie oferty na sprzęt i lokal.</span>
+</section>
+
+</div>
